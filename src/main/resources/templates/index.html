@@ -1,5 +1,5 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Libros</title>
@@ -26,7 +26,7 @@
                 </a>
             </td>
             <td>
-                <form th:method="delete" th:action="@{'/images' + ${image.name}}">
+                <form th:method="delete" th:action="@{'/images/' + ${image.name} + '/raw'}">
                     <input type="submit" value="Eliminar">
                 </form>
             </td>

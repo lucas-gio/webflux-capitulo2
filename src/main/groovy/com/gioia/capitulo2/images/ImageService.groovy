@@ -17,6 +17,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.logging.Logger
+import java.util.stream.StreamSupport
 
 @Service
 @CompileStatic
@@ -54,10 +55,9 @@ class ImageService {
      */
     Flux<Image> findAllImages(){
         try{
-            return Flux.fromIterable(Files.newDirectoryStream(Paths.get(UPLOAD_ROOT)))
-                .map((Path path) ->
-                    new Image([id: path.hashCode(), name: path.getFileName().toString()])
-                )
+            return Flux.fromStream(
+                    StreamSupport.stream(Files.newDirectoryStream(Paths.get(UPLOAD_ROOT)).spliterator(), true)
+                            .map((Path path) -> new Image([id: String.valueOf(path.hashCode()), name: path.getFileName().toString()])))
         }
         catch (Exception e){
             LOG.severe("Ocurrió un error al buscar todas las imágenes" + e.getMessage())
